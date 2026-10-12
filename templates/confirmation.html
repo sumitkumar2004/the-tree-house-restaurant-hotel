@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Request received | The Tree House{% endblock %}
+{% block content %}
+<section class="confirmation-wrap"><div class="confirmation-card"><div class="success-mark">✓</div><span class="eyebrow">THANK YOU, {{ name }}</span><h1>{% if kind == 'order' %}Your order is in motion.{% else %}Your request is with us.{% endif %}</h1><p>{% if kind == 'order' %}We've saved your food order request. The team will contact you to confirm the details and payment.{% else %}We've received your reservation request. Our team will contact you to confirm availability and final details.{% endif %}</p><div class="reference">REFERENCE <strong>{{ 'THO' if kind == 'order' else 'THB' }}-{{ '%05d'|format(reference) }}</strong></div>{% if total is not none %}<div class="confirm-total"><span>Estimated order total</span><strong>₹{{ total }}</strong></div>{% endif %}<ul class="confirm-details">{% for detail in details %}<li>{{ detail }}</li>{% endfor %}</ul><a class="btn btn-dark" href="{{ url_for('index') }}">Back to The Tree House <span>↗</span></a></div></section>
+{% endblock %}

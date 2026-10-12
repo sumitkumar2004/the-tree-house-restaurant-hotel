@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Admin overview | The Tree House{% endblock %}
+{% block content %}
+<section class="admin-page section-pad"><span class="eyebrow">DEMO ADMIN VIEW</span><h1>Orders & <em>reservations.</em></h1><p class="admin-warning">This page currently has no login protection. Do not publish it publicly until you add authentication.</p>
+<h2>Recent food orders</h2><div class="table-wrap"><table><thead><tr><th>Ref</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Status</th><th>Created</th></tr></thead><tbody>{% for o in orders %}<tr><td>THO-{{ '%05d'|format(o.id) }}</td><td>{{ o.customer_name }}</td><td>{{ o.phone }}</td><td>{{ o.items }}</td><td>₹{{ o.total }}</td><td>{{ o.status }}</td><td>{{ o.created_at }}</td></tr>{% else %}<tr><td colspan="7">No orders yet.</td></tr>{% endfor %}</tbody></table></div>
+<h2>Recent bookings</h2><div class="table-wrap"><table><thead><tr><th>Ref</th><th>Guest</th><th>Type</th><th>Dates</th><th>Guests</th><th>Room</th><th>Status</th></tr></thead><tbody>{% for b in bookings %}<tr><td>THB-{{ '%05d'|format(b.id) }}</td><td>{{ b.guest_name }}</td><td>{{ b.booking_type }}</td><td>{{ b.checkin or '—' }} → {{ b.checkout or '—' }}</td><td>{{ b.guests }}</td><td>{{ b.room_type or '—' }}</td><td>{{ b.status }}</td></tr>{% else %}<tr><td colspan="7">No bookings yet.</td></tr>{% endfor %}</tbody></table></div><a class="btn btn-dark" href="{{ url_for('index') }}">Back to website</a></section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="eyebrow light">A LITTLE ESCAPE, CLOSE TO HOME</span>
+    <h1>Where good food<br>meets <em>good living.</em></h1>
+    <p>Come for the flavours. Stay for the feeling. Your table and your next getaway are waiting.</p>
+    <div class="hero-actions"><a class="btn btn-light" href="#menu">Explore the menu <span>↘</span></a><a class="text-link light-link" href="#booking">Book your stay <span>→</span></a></div>
+    <div class="hero-note"><span class="pulse"></span> Freshly prepared · Warmly hosted · Thoughtfully served</div>
+  </div>
+  <div class="hero-side-note">THE TREE HOUSE / EST. YOUR YEAR</div>
+</section>
+<section class="intro section-pad">
+  <div><span class="eyebrow">MORE THAN A PLACE TO EAT</span><h2>Make yourself<br><em>at home.</em></h2></div>
+  <p>From a relaxed lunch with friends to a peaceful overnight stay, The Tree House brings food, comfort and hospitality together under one roof.</p>
+  <div class="intro-stats"><div><strong>01</strong><span>Fresh flavours</span></div><div><strong>02</strong><span>Comfortable stays</span></div><div><strong>03</strong><span>Personal service</span></div></div>
+</section>
+<section class="menu-section section-pad" id="menu">
+  <div class="section-heading"><div><span class="eyebrow">MADE WITH CARE</span><h2>Something <em>delicious.</em></h2></div><p>Explore a few favourites from our kitchen. Choose your dishes and place an order below.</p></div>
+  <div class="menu-layout">
+    <div class="menu-grid">
+      {% for item in menu %}
+      <article class="menu-card">
+        <div class="food-art food-{{ loop.index }}"><span>{{ item.emoji }}</span><small>{{ item.category }}</small></div>
+        <div class="menu-card-body"><div class="food-title"><h3>{{ item.name }}</h3><strong>₹{{ item.price }}</strong></div><p>{{ item.description }}</p><div class="food-bottom"><span class="veg-dot {{ 'nonveg' if not item.veg else '' }}"></span><span>{{ 'Vegetarian' if item.veg else 'Non-vegetarian' }}</span><label class="qty-control">Qty <input type="number" name="qty_{{ item.id }}" form="order-form" min="0" max="50" value="0" data-price="{{ item.price }}" aria-label="Quantity for {{ item.name }}"></label></div></div>
+      </article>
+      {% endfor %}
+    </div>
+    <aside class="order-panel">
+      <span class="eyebrow light">YOUR ORDER</span><h3>Ready when<br>you are.</h3>
+      <div id="order-summary" class="order-summary">Select items from the menu to get started.</div>
+      <div class="order-total"><span>Estimated total</span><strong id="order-total">₹0</strong></div>
+      <form id="order-form" action="{{ url_for('order') }}" method="post">
+        <label>Your name<input name="customer_name" required placeholder="Full name" autocomplete="name"></label>
+        <label>Phone number<input name="phone" required inputmode="tel" placeholder="+91 ..." autocomplete="tel"></label>
+        <label>Delivery address<textarea name="address" required rows="2" placeholder="House no., street, city"></textarea></label>
+        <label>Order notes <span class="optional">(optional)</span><textarea name="notes" rows="2" placeholder="Any preferences?"></textarea></label>
+        <button class="btn btn-accent full-width" type="submit">Place food order <span>↗</span></button>
+        <small class="form-note">Demo ordering flow — payment is collected separately.</small>
+      </form>
+    </aside>
+  </div>
+</section>
+<section class="stay-section section-pad" id="stay">
+  <div class="stay-photo"><div class="photo-label">YOUR OWN LITTLE RETREAT</div><div class="photo-caption">Slow down.<br><em>Stay awhile.</em></div></div>
+  <div class="stay-copy"><span class="eyebrow">A RESTFUL NIGHT, A BETTER MORNING</span><h2>Stay a little<br><em>longer.</em></h2><p>Settle into a comfortable room, take a breath, and let the everyday wait a little. Choose a room and send us your booking request.</p>
+    <div class="room-row"><div><strong>Deluxe Room</strong><span>Comfortable · Thoughtfully appointed</span></div><strong>₹2,499<small> / night*</small></strong></div>
+    <div class="room-row"><div><strong>Premium Room</strong><span>Extra space · A little more luxury</span></div><strong>₹3,499<small> / night*</small></strong></div>
+    <small class="muted">*Sample prices only. Replace with actual rates.</small><a class="btn btn-dark" href="#booking">Find your room <span>↗</span></a>
+  </div>
+</section>
+<section class="booking-section section-pad" id="booking">
+  <div class="booking-intro"><span class="eyebrow light">LET US SAVE YOU A SPOT</span><h2>Make a plan.<br><em>We'll handle the rest.</em></h2><p>Reserve a restaurant table or send a hotel booking request. Our team can confirm availability with you.</p><div class="booking-perk"><span>✳</span> A personal touch, from arrival to goodbye.</div></div>
+  <form class="booking-form" action="{{ url_for('booking') }}" method="post">
+    <div class="form-heading"><span class="eyebrow">RESERVATIONS</span><h3>Book your experience</h3></div>
+    <div class="field-grid"><label>I'm booking for<select name="booking_type" id="booking-type"><option value="room">Hotel room</option><option value="table">Restaurant table</option></select></label><label>Number of guests<select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>10</option></select></label></div>
+    <div id="room-fields"><div class="field-grid"><label>Check-in<input type="date" name="checkin" id="checkin"></label><label>Check-out<input type="date" name="checkout" id="checkout"></label></div><label>Room preference<select name="room_type"><option>Deluxe Room</option><option>Premium Room</option></select></label></div>
+    <div id="table-fields" hidden><label>Preferred date<input type="date" id="table-date"></label><label>Preferred time<select id="table-time"><option>Dinner — 7:00 PM</option><option>Dinner — 8:00 PM</option><option>Lunch — 1:00 PM</option><option>Lunch — 2:00 PM</option></select></label></div>
+    <div class="field-grid"><label>Full name<input name="guest_name" required placeholder="Your name" autocomplete="name"></label><label>Phone number<input name="phone" required placeholder="+91 ..." inputmode="tel" autocomplete="tel"></label></div>
+    <label>Email address<input name="email" type="email" required placeholder="you@example.com" autocomplete="email"></label>
+    <label>Special requests <span class="optional">(optional)</span><textarea name="special_requests" rows="2" placeholder="Arrival time, occasion, preferences..."></textarea></label>
+    <button class="btn btn-accent full-width" type="submit">Send booking request <span>↗</span></button>
+    <small class="form-note dark-note">Your request is not confirmed until our team contacts you.</small>
+  </form>
+</section>
+<section class="quote-section"><span>“</span><p>Good food fills the table.<br>Good hospitality makes it a memory.</p><small>THE TREE HOUSE WAY</small></section>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d2b">
+  <meta name="description" content="The Tree House — restaurant dining, food orders and comfortable hotel stays.">
+  <title>{% block title %}The Tree House | Dine · Stay · Unwind{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">TH</span><span><strong>The Tree House</strong><small>DINE · STAY · UNWIND</small></span></a>
+  <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  <nav class="nav-links">
+    <a href="{{ url_for('index') }}#menu">Our Menu</a>
+    <a href="{{ url_for('index') }}#stay">Hotel</a>
+    <a href="{{ url_for('index') }}#booking">Book a Table/Room</a>
+    <a class="nav-cta" href="{{ url_for('index') }}#menu">Order Food <span>↗</span></a>
+  </nav>
+</header>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}<div class="flash-wrap">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+<footer class="footer">
+  <div><a class="brand footer-brand" href="{{ url_for('index') }}"><span class="brand-mark">TH</span><span><strong>The Tree House</strong><small>DINE · STAY · UNWIND</small></span></a><p>Good food, thoughtful stays, and moments worth remembering.</p></div>
+  <div><strong>Explore</strong><a href="{{ url_for('index') }}#menu">Menu & Ordering</a><a href="{{ url_for('index') }}#stay">Our Rooms</a><a href="{{ url_for('index') }}#booking">Reservations</a></div>
+  <div><strong>Visit us</strong><p>Replace with your real address</p><p>+91 XXXXX XXXXX</p><p>hello@thetreehouse.example</p></div>
+  <div class="copyright">© {{ 2026 }} The Tree House. Website starter — update demo details before publishing.</div>
+</footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
